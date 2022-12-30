@@ -1,0 +1,183 @@
+CREATE DATABASE LIBRARY;
+USE LIBRARY;
+
+CREATE TABLE LIBRARY
+(
+Library_ID varchar(20) not null primary key,
+Library_Name varchar(100),
+Library_Address text,
+Library_PhoneNum varchar(25)
+);
+
+CREATE TABLE FACULTY
+(
+Faculty_ID varchar(20) not null primary key,
+Faculty_Name varchar(100),
+Faculty_Address text,
+Faculty_PhoneNum varchar(25)
+);
+
+CREATE TABLE BRANCH
+(
+Branch_ID varchar(20) not null primary key,
+Branch_Name varchar(100),
+Branch_Address text,
+Branch_PhoneNum varchar(25),
+Library_ID varchar(20),
+FOREIGN KEY (Library_ID) REFERENCES LIBRARY(Library_ID)
+);
+
+CREATE TABLE LIBRARIAN
+(
+Librarian_ID varchar(20) not null primary key,
+Librarian_Name varchar(100),
+Librarian_PhoneNum varchar(25),
+Librarian_Email text,
+Branch_ID varchar(20),
+FOREIGN KEY (Branch_ID) REFERENCES BRANCH(Branch_ID)
+);
+
+CREATE TABLE BOOK
+(
+Book_ID varchar(20) not null primary key,
+Book_Title varchar(200),
+ISBN varchar(20),
+Genre varchar(20),
+Language varchar(20),
+Book_Author varchar(50),
+Book_Rak varchar(10)
+);
+
+CREATE TABLE USER
+(
+User_ID varchar(20) not null primary key,
+User_Name varchar(100),
+User_Type varchar(20),
+User_PhoneNum varchar(25),
+User_Email text,
+Faculty_ID varchar(20),
+Branch_ID varchar(20),
+FOREIGN KEY (Faculty_ID) REFERENCES FACULTY(Faculty_ID),
+FOREIGN KEY (Branch_ID) REFERENCES BRANCH(Branch_ID)
+);
+
+CREATE TABLE BORROWINFO
+(
+Borrow_ID varchar(20) not null primary key,
+Borrow_Date Date,
+Return_Date Date,
+User_ID varchar(20),
+Book_ID varchar(20)
+);
+
+INSERT INTO LIBRARY
+VALUES
+('LB0001', 'Perpustakaan Universiti Malaysia Pahang(UMP)', 'Universiti Malaysia Pahang', '09-5493190');
+
+INSERT INTO FACULTY
+VALUES
+('F001', 'Faculty of Computing', 'BlockA1', '01-8835143'),
+('F002', 'Faculty of Engineering', 'BlockB2', '01-8893123'),
+('F003', 'Faculty of Chemistry', 'BlockC1', '01-8842445'),
+('F004', 'Faculty of Technology', 'BlockA2', '01-8867432'),
+('F005', 'Faculty of Civil', 'BlockB1', '01-8832564'),
+('F006', 'Faculty of Law', 'BlockD1', '01-2640836'),
+('F007', 'Faculty of Natural Sciences', 'BlockC2', '01-2750035'),
+('F008', 'Faculty of Philosophy', 'BlockE1', '01-6644936'),
+('F009', 'Faculty of Arts', 'BlockD2', '01-9447002'),
+('F010', 'Faculty of Education', 'BlockE2', '01-2293613'),
+('F011', 'Faculty of Economics', 'BlockF1', '01-2883552'),
+('F012', 'Faculty of Political Sciense', 'BlockG1', '01-2771192'),
+('F013', 'Faculty of Management Studies', 'BlockF2', '01-2211827');
+
+INSERT INTO BRANCH
+VALUES
+('B01', 'Gambang', 'Kampung Melayu Gambang, 26300 Gambang, Pahang', '09-4245600', 'LB0001'),
+('B02', 'Pekan', 'Universiti Malaysia Pahang, 26600 Pekan, Pahang', '09-4245639', 'LB0001');
+
+INSERT INTO LIBRARIAN
+VALUES
+('LBG11', 'Faris bin Zakaria', '0133221910', 'Farisloz@gmail.com', 'B01'),
+('LBG13', 'Fuad bin Ali', '0199923856', 'Fuadredo@gmail.com', 'B01'),
+('LBP16', 'Maryam binti Ibrahim', '0142218593', 'Maryamso@gmail.com', 'B02'),
+('LBG20', 'Agus bin Rosli', '012329932', 'Agusros@gmail.com', 'B01'),
+('LBP04', 'Sofian bin Eddy', '019927658', 'SoEddy@gmail.com', 'B02'),
+('LBG03', 'Rahman Bin Rahmat', '0102548156', 'RahG03@gmail.com', 'B01'),
+('LBG05', 'Jamilah Binti Nordin', '0138576423', 'JamG05@gmail.com', 'B01'),
+('LBP01', 'Syafiqah Binti Adnan', '0112567819', 'SyaP01@gmail.com', 'B02'),
+('LBG08', 'Rahman Bin Rahmat', '0102548156', 'RahG03@gmail.com', 'B01'),
+('LBP02', 'Kamarul Bin Zaman', '01345781453', 'KamP02@gmail.com', 'B02'),
+('LBG34', 'Jamilah Binti Nordin', '0138576423', 'JamG05@gmail.com', 'B01');
+
+INSERT INTO BOOK
+VALUES
+('CK119', 'Operating System', '978-967-54354-221-2', 'Journal', 'Malaysia', 'Remzi H. Arpaci-Dusseau', 'MJ1'),
+('CP133', 'Engineering Mechanics', '978-967-76543-664-3', 'Journal', 'Malaysia', 'S.S Bhavikatti', 'MJ2'),
+('CH145', 'Medicinal Chemistry', '978-967-59362-565-6', 'Science', 'English', 'David Aldous', 'ES1'),
+('CK153', 'Operating System Management', '978-967-35561-335-4', 'Journal', 'Malaysia', 'Remzi H. Arpaci-Dusseau', 'MJ3'),
+('CD125', 'Technology Management', '978-967-54354-221-2', 'Journal', 'English', 'Rob Phaal', 'EJ1'),
+('CC134', 'Civil Engineering', '978-967-75423-433-1', 'Review', 'English', 'Micheal R. Lindeburg', 'ER1'),
+('CK176', 'Operating System Vol2', '978-967-54355-222-3', 'Journal', 'Malaysia', 'Remzi H.Arpaci-Dusseau', 'MJ4'),
+('CG201', 'Medicinal Chemistry Vol2', '978-967-76541-667-5', 'Science', 'Malaysia', 'David Aldous', 'MS1'),
+('CV303', 'Civil Engineering Vol2', '978-967-59361-563-8', 'Review', 'English', 'Micheal R.Lindeburg', 'ER2'),
+('CK100', 'Operating System Management Vol2', '978-967-54353-222-3', 'Journal', 'English', 'Remzi H. Arpaci-Dusseau', 'EJ1'),
+('CN938', 'Einstein: His Life and Universe', '973-234-42444-123-3', 'Biography', 'English', 'Walter Isaacson', 'EB1'),
+('CJ928', 'Steve Jobs', '937-263-28253-745-2', 'Biography', 'English', 'Walter Isaacson', 'EB2'),
+('CR283', 'What Would Google Do?', '933-124-23342-534-2', 'Business', 'English', 'Jeff Jarvis', 'EBS1'),
+('CB384', 'Critical Chain', '983-643-52345-523-5', 'Business', 'English', 'Eliyahu M. Goldratt', 'EBS2'),
+('CE012', 'Technology Management Vol2', '978-967-35564-336-5', 'Education', 'Englis', 'Rob Phaal', 'EED1'),
+('CS928', 'Cyclopædia, or an Universal Dictionary of Arts and Sciences', '938-823-19922-134-3', 'Encyclopedia', 'English', 'Ephraim Chambers', 'EE1'),
+('CS016', 'The New Grove Dictionary of Music and Musicians', '918-282-38913-233-4', 'Encyclopedia', 'English', ' George Grove', 'EE2'),
+('CH273', 'The Encyclopedia of Science Fiction', '973-274-47429-382-8', 'Encyclopedia', 'English', 'John Clute', 'EE3'),
+('CG283', 'The Diary Of a Young Girl', '928-863-66583-227-8', 'History', 'English', 'Anne Frank', 'EH1'),
+('CK283', 'Longitude: The True Story of a Lone Genius Who Solved the Greatest Scientific Problem of His Time', '926-553-66283-553-2', 'History', 'English', 'Dava Sobel', 'EH2'),
+('CB283', 'A People History of the United States', '926-273-38826-882-3', 'History', 'English', 'Howard Zinn', 'EH3'),
+('CG292', 'Krakatoa: The Day the World Exploded', '926-282-88828-222-3', 'History', 'English', 'Simon Winchester', 'EH4'),
+('CH293', 'Benjamin Franklin: An American Life', '981-227-82828-554-3', 'Biography', 'English', 'Walter Isaacson', 'EB3'),
+('CM203', 'Theodore Rex', '962-266-22345-664-2', 'Biography', 'English', 'Edmund Morris', 'EB4'),
+('CH292', 'Thomas Jefferson: The Art of Power', '944-711-22635-121-2', 'Biography', 'English', 'Jon Meacham', 'EB5');
+
+INSERT INTO USER
+VALUES
+('LL063', 'FJamal bin Kamil', 'Lecturer', '0191233324', 'JamalK@gmail.com', 'F001', 'B01'),
+('LL031', 'Kamarul bin Manaf', 'Lecturer', '0134569928', 'kamarul22@gmail.com', 'F002', 'B01'),
+('PP011', 'Liza binti Khairul', 'Lecturer', '0124414299', 'LizaKhai@gmail.com', 'F003', 'B02'),
+('LL042', 'Ramlan bin Hisham', 'Lecturer', '0198873922', 'Ramlan330@gmail.com', 'F011', 'B01'),
+('PP102', 'Linda binti Ahmad', 'Lecturer', '0132218273', 'Lindahmad@gmail.com', 'F004', 'B02'),
+('LL051', 'Kamal Bin Jamal', 'Student', '0123467890', 'kamal23@gmail.com', 'F012', 'B01'),
+('PP023', 'Rosliza Binti Rosli', 'Student', '0189885267', 'ros33@gmail.com', 'F005', 'B01'),
+('LL033', 'Ahmad Bin Ramli', 'Student', '0199685312', 'ahmad1@gmail.com', 'F006', 'B02'),
+('LL034', 'Muhamad Bin Kamarul', 'Student', '0154632718', 'muhd11@gmail.com', 'F007', 'B01'),
+('PP043', 'Jannah Binti Mahmud', 'Student', '0145887652', 'jann2@gmail.com', 'F008', 'B02'),
+('PP134', 'Syahidatul Binti Idris', 'Lecturer', '0112345613', 'Lc134@gmail.com', 'F009', 'B01'),
+('LL273', 'Riyan Dwi Julianto', 'Student', '0182735936', 'Riyan@gmail.com', 'F010', 'B01'),
+('LL883', 'Armanda Javier', 'Student', '0127392735', 'Javier@gmail.com', 'F013', 'B02'),
+('PP352', 'Milennia Amanda Devanti', 'Student', '0182253661', 'Ellen@gmail.com', 'F004', 'B02'),
+('PP336', 'Sahda Armandiva Usman', 'Student', '0192288374', 'sahda@gmail.com', 'F001', 'B01'),
+('PP223', 'Farrah Salsabil', 'Student', '0182665274', 'farrah@gmail.com', 'F004', 'B02'),
+('PP473', 'Sherly Romadona', 'Student', '0192752297', 'Shrly@gmail.com', 'F009', 'B02');
+
+INSERT INTO BORROWINFO
+VALUES
+('B001', '2020-3-19', '2020-3-25', 'LL883', 'CK119'),
+('B014', '2020-3-17', '2020-3-24', 'PP883', 'CP133'),
+('B023', '2020-3-27', '2020-4-7', 'LL033', 'CH145'),
+('B027', '2020-3-30', '2020-4-5', 'LL034', 'CK119'),
+('B035', '2020-4-1', '2020-4-7', 'PP043', 'CD125'),
+('B045', '2020-4-2', '2020-4-9', 'LL134', 'CC134'),
+('B038', '2020-3-24', '2020-4-1', 'LL883', 'CB384'),
+('B008', '2020-3-18', '2020-3-23', 'LL063', 'CK100'),
+('B018', '2020-3-16', '2020-3-23', 'LL031', 'CG201'),
+('B029', '2020-3-27', '2020-4-4', 'PP011', 'CV303'),
+('B073', '2020-3-30', '2020-4-6', 'LL042', 'CK100'),
+('B099', '2020-3-28', '2020-4-3', 'PP102', 'CE012');
+
+show databases;
+show tables;
+desc library;
+desc faculty;
+desc branch;
+desc librarian;
+desc book;
+desc user;
+desc borrowinfo;
